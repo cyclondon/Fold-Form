@@ -35,3 +35,16 @@ GitHub Pages only serves files, so three things need a small backend. The simple
 | Showroom addresses | `const LOCS=` |
 | English / Chinese text | `const T={` |
 | Products and their size ranges | `const PRODUCTS=[` |
+
+## Factory work orders
+
+Every order produces a factory work order (生產工單). It has a cover sheet plus one A4 page per line, showing:
+- the section drawing and the flat blank;
+- the fold schedule (position, angle, direction, groove face);
+- holes and slots, plus the engraving area and laser-ready artwork;
+- design checks, the 3D proof, and a QC sign-off box.
+
+Customer email, phone and address are left off; the sheet shows only the name and where the order goes.
+
+- **On the static site (demo):** orders are saved in the browser. Open *Staff · factory orders* in the footer, or go to `/#orders`. You can print or save as PDF, or download the sheet as HTML.
+- **On the live site:** Stripe's `checkout.session.completed` webhook needs a small server function. It calls the same `woDoc(order)` code, prints the HTML to PDF (for example with headless Chrome), and emails the PDF to the factory. Store the order JSON (the cart items and customer details) in Stripe metadata or a database, so the work order can be rebuilt.
